@@ -1,281 +1,458 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>BrightStudio</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>BrightStudio — креативный видеопродакшн</title>
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Normalize (CDN) -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" />
+
   <style>
-    :root {
-      --primary: #0066ff;
-      --secondary: #f5f8ff;
-      --text: #333;
-      --bg: #fff;
+    :root{
+      --bg:#fff;
+      --text:#0f172a;
+      --muted:#6b7280;
+      --accent-1: #ff6fa3; /* pink */
+      --accent-2: #7c5cff; /* purple */
+      --glass: rgba(255,255,255,0.75);
+      --card-bg: rgba(255,255,255,0.9);
+      --radius: 14px;
+      --container: 1100px;
+      --shadow-sm: 0 6px 20px rgba(2,6,23,0.08);
     }
 
-    body {
-      font-family: "Inter", sans-serif;
-      color: var(--text);
-      background: var(--bg);
-      margin: 0;
-      line-height: 1.6;
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      font-family: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+      color:var(--text);
+      background: linear-gradient(180deg, #fff 0%, #fff 40%);
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+      margin:0;
+      line-height:1.45;
     }
 
-    header {
-      background: var(--secondary);
-      padding: 20px 40px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.05);
-    }
+    a{color:inherit;text-decoration:none}
+    img{display:block;max-width:100%;border-radius:10px}
 
-    header h1 {
-      color: var(--primary);
-      font-size: 1.5rem;
-      margin: 0;
-    }
-
-    nav a {
-      color: var(--text);
-      text-decoration: none;
-      margin-left: 20px;
-      font-weight: 500;
-    }
-
-    nav a:hover {
-      color: var(--primary);
-    }
-
-    /* Hero Section */
-    .hero {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      padding: 100px 20px;
-      background: linear-gradient(135deg, #e9f1ff, #ffffff);
-    }
-
-    .hero h2 {
-      font-size: 2.5rem;
-      margin-bottom: 15px;
-      color: #003366;
-    }
-
-    .hero p {
-      max-width: 600px;
-      margin-bottom: 30px;
-    }
-
-    .hero button {
-      background: var(--primary);
-      color: #fff;
-      border: none;
-      padding: 14px 28px;
-      font-size: 1rem;
-      border-radius: 8px;
-      cursor: pointer;
-      transition: background 0.3s;
-    }
-
-    .hero button:hover {
-      background: #0047b3;
-    }
-
-    /* Почему мы */
-    .why {
-      padding: 80px 20px;
-      background: var(--secondary);
-      text-align: center;
-    }
-
-    .why h2 {
-      font-size: 2rem;
-      color: #003366;
-      margin-bottom: 40px;
-    }
-
-    .why__items {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 20px;
-      max-width: 1000px;
+    .container{
+      width: min(var(--container), 92%);
       margin: 0 auto;
     }
 
-    .why__item {
-      background: #fff;
-      border-radius: 12px;
-      padding: 20px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+    /* Header */
+    .header{
+      position: sticky;
+      top: 0;
+      z-index: 60;
+      backdrop-filter: blur(6px) saturate(120%);
+      background: linear-gradient(180deg, rgba(255,255,255,0.72), rgba(255,255,255,0.55));
+      border-bottom: 1px solid rgba(15,23,42,0.05);
+    }
+    .header__inner{
+      display:flex;
+      align-items:center;
+      gap:20px;
+      padding: 14px 0;
+      justify-content:space-between;
+    }
+    .logo{
+      display:flex;
+      gap:12px;
+      align-items:center;
+      font-weight:800;
+      color:var(--accent-2);
+      letter-spacing:-0.5px;
+      font-size:1.1rem;
+    }
+    .logo__mark{
+      width:38px;height:38px;border-radius:10px;
+      background: linear-gradient(135deg,var(--accent-1),var(--accent-2));
+      box-shadow: var(--shadow-sm);
+      display:grid;place-items:center;color:#fff;font-weight:800;
     }
 
-    .why__item h3 {
-      color: var(--primary);
+    .nav{
+      display:none;
+    }
+    .nav__list{display:flex;gap:18px;align-items:center}
+    .nav__link{color:var(--muted);font-weight:600;padding:8px 10px;border-radius:10px}
+    .nav__link:hover{color:var(--text);background:rgba(124,92,255,0.06)}
+
+    .cta{
+      display:none;
+      background: linear-gradient(90deg,var(--accent-1),var(--accent-2));
+      color:#fff;padding:10px 16px;border-radius:12px;font-weight:700;border:none;cursor:pointer;
+      box-shadow: 0 10px 30px rgba(124,92,255,0.12);
     }
 
-    /* Отзывы */
-    .reviews {
-      padding: 80px 20px;
-      text-align: center;
+    /* Hero */
+    .hero{
+      min-height: 72vh;
+      display:grid;
+      grid-template-columns: 1fr;
+      gap: 28px;
+      align-items:center;
+      padding: 56px 0;
+      background:
+        radial-gradient(600px 300px at 10% 10%, rgba(255,111,154,0.12), transparent 6%),
+        radial-gradient(500px 260px at 95% 80%, rgba(124,92,255,0.12), transparent 6%),
+        linear-gradient(180deg,#fff, #fbf7ff 60%);
     }
 
-    .reviews h2 {
-      color: #003366;
-      font-size: 2rem;
-      margin-bottom: 40px;
+    .hero__inner{ display:grid; gap:22px; align-items:center; }
+    .hero__row{ display:grid; grid-template-columns: 1fr; gap:20px; align-items:center; }
+    .hero__content{
+      max-width:680px;
+      padding: 18px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.9), rgba(255,255,255,0.85));
+      border-radius: var(--radius);
+      box-shadow: var(--shadow-sm);
+    }
+    .hero__eyebrow{ color:var(--accent-2); font-weight:700; font-size:0.9rem; margin-bottom:8px; letter-spacing:0.6px; }
+    .hero__title{ font-size: clamp(1.6rem, 3.8vw, 2.6rem); margin:0 0 14px; line-height:1.05; color:#0b1220; }
+    .hero__lead{ color:var(--muted); margin:0 0 20px; font-size:1rem; }
+    .hero__actions{ display:flex; gap:12px; flex-wrap:wrap; }
+
+    .btn{
+      display:inline-flex;align-items:center;gap:10px;padding:12px 18px;border-radius:12px;font-weight:700;
+      cursor:pointer;border: none;
+      transition: transform .16s ease, box-shadow .16s ease;
+    }
+    .btn--primary{
+      background: linear-gradient(90deg,var(--accent-1),var(--accent-2));
+      color:#fff; box-shadow: 0 12px 30px rgba(124,92,255,0.12);
+    }
+    .btn--ghost{
+      background:transparent;border:1px solid rgba(15,23,42,0.06); color: var(--text);
+    }
+    .btn:hover{ transform: translateY(-4px); }
+
+    .hero__media{
+      display:block;
+      border-radius:18px;
+      overflow:hidden;
+      box-shadow: 0 20px 50px rgba(11,18,32,0.08);
+    }
+    .hero__media img{ width:100%; height:100%; object-fit:cover; display:block; }
+
+    /* Why */
+    .why{
+      padding: 64px 0;
+    }
+    .section-title{ font-size: clamp(1.25rem, 2.4vw, 1.75rem); color: #0b1220; margin:0 0 18px; }
+    .why__grid{
+      display:grid; gap:18px; margin-top:18px;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
     }
 
-    .reviews__list {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 20px;
-      max-width: 900px;
-      margin: 0 auto;
+    .why__card{
+      background: var(--card-bg);
+      border-radius:14px;
+      padding:18px;
+      box-shadow: var(--shadow-sm);
+      display:flex; gap:12px; align-items:flex-start;
+      transition: transform .2s ease;
     }
+    .why__card:hover{ transform: translateY(-8px); }
+    .why__icon{
+      width:56px;height:56px;border-radius:12px;
+      background: linear-gradient(135deg,var(--accent-1),var(--accent-2));
+      display:grid;place-items:center;color:#fff;font-weight:800;font-size:1.25rem; flex-shrink:0;
+    }
+    .why__title{ margin:0 0 6px; font-weight:700; font-size:1.02rem; }
+    .why__text{ margin:0; color:var(--muted); font-size:0.95rem; }
 
-    .review {
-      background: var(--secondary);
-      border-radius: 12px;
-      padding: 20px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+    /* Reviews */
+    .reviews{ padding: 64px 0; background: linear-gradient(180deg, rgba(124,92,255,0.03), transparent 70%); }
+    .reviews__grid{ display:grid; gap:18px; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); margin-top:18px; }
+    .review{
+      background: rgba(255,255,255,0.95);
+      padding:16px;border-radius:12px;box-shadow: var(--shadow-sm); display:flex; gap:12px; align-items:flex-start;
     }
+    .review__avatar{ width:54px;height:54px;border-radius:12px; overflow:hidden; flex-shrink:0; }
+    .review__avatar img{ width:100%; height:100%; object-fit:cover; display:block; }
+    .review__meta{ flex:1 }
+    .review__name{ margin:0; font-weight:700; color:#0b1220; }
+    .review__role{ margin:4px 0 8px; color:var(--muted); font-size:0.9rem }
+    .review__text{ margin:0; color:#0b1220; font-size:0.98rem; }
 
-    .review p {
-      font-style: italic;
+    /* Contact */
+    .contact{
+      padding: 64px 0;
     }
-
-    .review strong {
-      display: block;
-      margin-top: 10px;
-      color: var(--primary);
+    .contact__wrap{
+      display:grid; gap:18px; grid-template-columns: 1fr; align-items:start;
     }
-
-    /* Форма */
-    .contact {
-      background: var(--secondary);
-      padding: 80px 20px;
-      text-align: center;
+    .contact__left{
+      background: linear-gradient(180deg, rgba(124,92,255,0.06), rgba(255,111,154,0.04));
+      padding:20px;border-radius:12px;
     }
-
-    .contact h2 {
-      font-size: 2rem;
-      color: #003366;
-      margin-bottom: 20px;
+    .contact__form{
+      background: var(--card-bg); padding:18px; border-radius:12px; box-shadow: var(--shadow-sm);
     }
-
-    .contact form {
-      max-width: 500px;
-      margin: 0 auto;
-      display: flex;
-      flex-direction: column;
-      gap: 15px;
+    .field{ display:flex; flex-direction:column; gap:8px; margin-bottom:10px }
+    label{ font-weight:600; font-size:0.95rem; color:#0b1220 }
+    input, textarea{
+      padding:10px 12px; border-radius:10px; border:1px solid rgba(15,23,42,0.06); font:inherit;
+      resize: vertical;
     }
-
-    .contact input,
-    .contact textarea {
-      padding: 12px;
-      border: 1px solid #ccc;
-      border-radius: 8px;
-      font-family: inherit;
-      font-size: 1rem;
-    }
-
-    .contact button {
-      background: var(--primary);
-      color: #fff;
-      border: none;
-      padding: 14px;
-      border-radius: 8px;
-      font-size: 1rem;
-      cursor: pointer;
-      transition: background 0.3s;
-    }
-
-    .contact button:hover {
-      background: #0047b3;
-    }
+    input:focus, textarea:focus{ outline:none; box-shadow: 0 6px 18px rgba(124,92,255,0.08); border-color: rgba(124,92,255,0.3) }
+    .form-actions{ display:flex; gap:12px; align-items:center; margin-top:6px }
+    .note{ font-size:0.9rem; color:var(--muted) }
 
     /* Footer */
-    footer {
-      background: #003366;
-      color: #fff;
-      padding: 20px;
-      text-align: center;
+    footer{
+      border-top:1px solid rgba(11,18,32,0.04);
+      padding:18px 0; text-align:center; color:var(--muted); font-size:0.95rem;
     }
 
-    footer p {
-      margin: 0;
-      font-size: 0.9rem;
+    /* Reveals */
+    .reveal{ opacity:0; transform: translateY(14px); transition: transform .6s cubic-bezier(.2,.9,.2,1), opacity .6s ease; will-change:transform,opacity; }
+    .reveal--in{ opacity:1; transform: translateY(0); }
+
+    /* Responsive */
+    @media(min-width:900px){
+      .header__inner{ padding:18px 0; }
+      .nav{ display:block }
+      .cta{ display:inline-flex }
+      .hero{ grid-template-columns: 1fr 520px; align-items:center; min-height:72vh; padding:72px 0; }
+      .hero__inner{ grid-column:1 / -1; }
+      .hero__row{ grid-template-columns: 1fr 1fr; gap:28px; align-items:center; }
+      .hero__content{ padding:28px 26px; }
+      .contact__wrap{ grid-template-columns: 1fr 420px; }
+    }
+
+    @media(max-width:540px){
+      .logo{font-size:1rem}
+      .hero{ padding:44px 16px }
+      .hero__content{ padding:16px }
     }
   </style>
 </head>
 <body>
-  <header>
-    <h1>BrightStudio</h1>
-    <nav>
-      <a href="#why">Почему мы</a>
-      <a href="#reviews">Отзывы</a>
-      <a href="#contact">Контакты</a>
-    </nav>
+  <!-- HEADER -->
+  <header class="header">
+    <div class="container header__inner">
+      <a class="logo" href="#">
+        <div class="logo__mark">B</div>
+        <div>
+          <div style="font-size:0.95rem">BrightStudio</div>
+          <div style="font-size:0.73rem;color:var(--muted);margin-top:4px">креативный видеопродакшн</div>
+        </div>
+      </a>
+
+      <nav class="nav" aria-label="Основная навигация">
+        <ul class="nav__list">
+          <li><a class="nav__link" href="#why">Почему</a></li>
+          <li><a class="nav__link" href="#reviews">Отзывы</a></li>
+          <li><a class="nav__link" href="#contact">Контакты</a></li>
+        </ul>
+      </nav>
+
+      <a class="cta" href="#contact">Заказать проект</a>
+    </div>
   </header>
 
-  <section class="hero">
-    <h2>Создаём светлые идеи для вашего успеха</h2>
-    <p>BrightStudio — это команда дизайнеров и разработчиков, которые помогают бизнесу расти с помощью современных цифровых решений.</p>
-    <button>Подробнее</button>
-  </section>
+  <!-- HERO -->
+  <main>
+    <section class="hero container" aria-label="Приветственная секция">
+      <div class="hero__row">
+        <div class="hero__content reveal" data-reveal>
+          <div class="hero__eyebrow">BrightStudio • Креатив</div>
+          <h1 class="hero__title">Делаем видео, которое продаёт и вдохновляет</h1>
+          <p class="hero__lead">Короткие соц-кейсы, рекламные ролики, промо и event-видео — от идеи и сценария до монтажа и продвижения. Быстро, красиво и в формате KPI.</p>
 
-  <section class="why" id="why">
-    <h2>Почему выбирают нас</h2>
-    <div class="why__items">
-      <div class="why__item">
-        <h3>Современный дизайн</h3>
-        <p>Используем последние тренды UI/UX, чтобы ваши продукты выглядели стильно и удобно.</p>
-      </div>
-      <div class="why__item">
-        <h3>Надёжная команда</h3>
-        <p>Мы работаем с 2015 года и знаем, как доводить проекты до результата.</p>
-      </div>
-      <div class="why__item">
-        <h3>Полный цикл</h3>
-        <p>От идеи и дизайна до запуска и технической поддержки.</p>
-      </div>
-    </div>
-  </section>
+          <div class="hero__actions">
+            <a class="btn btn--primary" href="#contact">Обсудить проект</a>
+            <a class="btn btn--ghost" href="#why">Почему мы</a>
+          </div>
 
-  <section class="reviews" id="reviews">
-    <h2>Отзывы клиентов</h2>
-    <div class="reviews__list">
-      <div class="review">
-        <p>«BrightStudio помогли нам создать современный сайт для нашей компании. Всё сделали быстро и качественно!»</p>
-        <strong>— Айжан, менеджер</strong>
-      </div>
-      <div class="review">
-        <p>«Команда подошла к проекту с душой. Результат превзошёл ожидания!»</p>
-        <strong>— Тимур, предприниматель</strong>
-      </div>
-      <div class="review">
-        <p>«Отличная коммуникация и внимательное отношение к деталям. Рекомендую!»</p>
-        <strong>— Сания, маркетолог</strong>
-      </div>
-    </div>
-  </section>
+          <div style="margin-top:14px;color:var(--muted);font-size:0.92rem">
+            <strong>Быстрая оценка</strong> — расскажите задачу, и мы вернёмся с рабочей сметой.
+          </div>
+        </div>
 
-  <section class="contact" id="contact">
-    <h2>Свяжитесь с нами</h2>
-    <form>
-      <input type="text" placeholder="Ваше имя" required>
-      <input type="email" placeholder="Ваш email" required>
-      <textarea rows="4" placeholder="Ваше сообщение" required></textarea>
-      <button type="submit">Отправить</button>
-    </form>
-  </section>
+        <div class="hero__media reveal" data-reveal>
+          <!-- Large image from Unsplash -->
+          <img src="https://images.unsplash.com/photo-1508612761958-3a79f09c4b8f?q=80&w=1400&auto=format&fit=crop&ixlib=rb-4.0.3&s=7c6e6fbec7246c6f3b50f9f9a9a7b7b2"
+               alt="Оператор с камерой" loading="lazy">
+        </div>
+      </div>
+    </section>
 
+    <!-- WHY -->
+    <section id="why" class="why container">
+      <header class="reveal" data-reveal><h2 class="section-title">Почему выбирают BrightStudio</h2></header>
+
+      <div class="why__grid">
+        <article class="why__card reveal" data-reveal>
+          <div class="why__icon">🎯</div>
+          <div>
+            <h3 class="why__title">Фокус на результате</h3>
+            <p class="why__text">Мы ориентируемся на конкретные метрики — лиды, просмотры, конверсии. Видео с бизнес-целью.</p>
+          </div>
+        </article>
+
+        <article class="why__card reveal" data-reveal>
+          <div class="why__icon">⚡</div>
+          <div>
+            <h3 class="why__title">Быстро и организовано</h3>
+            <p class="why__text">Чёткий таймлайн, быстрые процессы и прозрачный отчёт по этапам.</p>
+          </div>
+        </article>
+
+        <article class="why__card reveal" data-reveal>
+          <div class="why__icon">🎬</div>
+          <div>
+            <h3 class="why__title">Сильная команда</h3>
+            <p class="why__text">Режиссёры, операторы, монстры монтажа и motion — всё in-house.</p>
+          </div>
+        </article>
+
+        <article class="why__card reveal" data-reveal>
+          <div class="why__icon">📈</div>
+          <div>
+            <h3 class="why__title">Прозрачная смета</h3>
+            <p class="why__text">Никаких скрытых оплат. Смета по этапам и прогноз возврата инвестиций.</p>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- REVIEWS -->
+    <section id="reviews" class="reviews container">
+      <header class="reveal" data-reveal><h2 class="section-title">Отзывы клиентов</h2></header>
+
+      <div class="reviews__grid">
+        <article class="review reveal" data-reveal>
+          <div class="review__avatar"><img src="https://images.unsplash.com/photo-1547425260-76bcadfb4f2c?q=80&w=400&auto=format&fit=crop&ixlib=rb-4.0.3&s=5e7f9f2c3b0f0de6d2b8d8a2aee1f9a7" alt="Анна Петрова"></div>
+          <div class="review__meta">
+            <h4 class="review__name">Анна Петрова</h4>
+            <div class="review__role">Маркетинг-директор, NordSoft</div>
+            <p class="review__text">«BrightStudio сделали промо-ролик для продукта — продажи и вовлечённость выросли. Понравилась скорость и креативность».</p>
+          </div>
+        </article>
+
+        <article class="review reveal" data-reveal>
+          <div class="review__avatar"><img src="https://images.unsplash.com/photo-1545996124-1b4a0f35b6af?q=80&w=400&auto=format&fit=crop&ixlib=rb-4.0.3&s=6e2b1a9c3f9b2a4f6b5e9f7c3d2a1b4e" alt="Иван Смирнов"></div>
+          <div class="review__meta">
+            <h4 class="review__name">Иван Смирнов</h4>
+            <div class="review__role">Основатель, CraftCoffee</div>
+            <p class="review__text">«Спасибо команде за серию роликов для соцсетей. CPM снизился, удержание выросло — работаем дальше».</p>
+          </div>
+        </article>
+
+        <article class="review reveal" data-reveal>
+          <div class="review__avatar"><img src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1?q=80&w=400&auto=format&fit=crop&ixlib=rb-4.0.3&s=8a4f4c9e7b1c2a6b5d9e1f3a2c7b5d6e" alt="Сания"></div>
+          <div class="review__meta">
+            <h4 class="review__name">Сания</h4>
+            <div class="review__role">Маркетолог</div>
+            <p class="review__text">«Отличная коммуникация и внимание к деталям. Рекомендую BrightStudio для комплексных проектов».</p>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact" class="contact container">
+      <header class="reveal" data-reveal><h2 class="section-title">Расскажите о проекте</h2></header>
+
+      <div class="contact__wrap">
+        <div class="contact__left reveal" data-reveal>
+          <p style="margin:0;font-weight:700;color:#0b1220">Быстрая консультация и предварительная смета</p>
+          <p style="margin-top:8px;color:var(--muted)">Оставьте контакты — менеджер свяжется в рабочее время и уточнит все детали.</p>
+
+          <ul style="margin-top:18px; padding-left:18px; color:var(--muted)">
+            <li style="margin-bottom:8px">Сценарий и режиссура</li>
+            <li style="margin-bottom:8px">Операторская группа и техника</li>
+            <li style="margin-bottom:8px">Монтаж, цветокор, саунд-дизайн</li>
+          </ul>
+        </div>
+
+        <form class="contact__form reveal" data-reveal id="contactForm" action="#" novalidate>
+          <div class="field">
+            <label for="name">Имя</label>
+            <input id="name" name="name" type="text" placeholder="Как к вам обращаться?" required>
+          </div>
+
+          <div class="field">
+            <label for="email">Email</label>
+            <input id="email" name="email" type="email" placeholder="you@example.com" required>
+          </div>
+
+          <div class="field">
+            <label for="project">Кратко о задаче</label>
+            <textarea id="project" name="project" rows="4" placeholder="Что нужно: формат, куда будем публиковать, желаемый дедлайн..." required></textarea>
+          </div>
+
+          <div class="form-actions">
+            <button type="submit" class="btn btn--primary">Отправить заявку</button>
+            <div class="note" id="formNote">Мы ответим в течение рабочего дня.</div>
+          </div>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <!-- FOOTER -->
   <footer>
-    <p>© 2025 BrightStudio. Все права защищены.</p>
+    <div class="container" style="display:flex;flex-direction:column;gap:10px;align-items:center;justify-content:center">
+      <div style="display:flex;gap:12px;align-items:center">
+        <div class="logo__mark" style="width:36px;height:36px;font-weight:800;font-size:16px">B</div>
+        <div style="font-weight:700">BrightStudio</div>
+      </div>
+      <div style="color:var(--muted)">© 2025 BrightStudio • Все права защищены</div>
+    </div>
   </footer>
+
+  <script>
+    // Simple scroll reveal using IntersectionObserver
+    (function(){
+      const obs = new IntersectionObserver((entries, o) => {
+        entries.forEach(e => {
+          if (e.isIntersecting) {
+            e.target.classList.add('reveal--in');
+            o.unobserve(e.target);
+          }
+        });
+      }, {threshold: 0.12});
+
+      document.querySelectorAll('[data-reveal]').forEach(el => obs.observe(el));
+    })();
+
+    // Simple form handling (demo). On submission — show success note (no real sending).
+    (function(){
+      const form = document.getElementById('contactForm');
+      const note = document.getElementById('formNote');
+
+      form.addEventListener('submit', function(e){
+        e.preventDefault();
+        // basic validation
+        const name = form.name.value.trim();
+        const email = form.email.value.trim();
+        const project = form.project.value.trim();
+        if(!name || !email || !project){
+          note.textContent = 'Пожалуйста, заполните все поля.';
+          note.style.color = 'crimson';
+          return;
+        }
+        // emulate send
+        note.style.color = 'var(--muted)';
+        note.textContent = 'Отправка...';
+        // fake delay
+        setTimeout(() => {
+          form.reset();
+          note.style.color = 'green';
+          note.textContent = 'Спасибо! Заявка отправлена — мы скоро свяжемся.';
+        }, 900);
+      });
+    })();
+  </script>
 </body>
 </html>
